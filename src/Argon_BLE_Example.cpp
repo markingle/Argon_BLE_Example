@@ -5,15 +5,14 @@
 #line 1 "/Users/markingle/Downloads/IoTCode/Argon_BLE_Example/src/Argon_BLE_Example.ino"
 /*
  * Project Argon_BLE_Example
- * Description:
- * Author:
- * Date:
+ * Description: Something to help teach how BLE works!
+ * Author: Mark Ingle
+ * Date: 12/28/2019
  */
 
 #include "Particle.h"
 
 // Debugging Setup Code
-void onDataReceived_HistData(const uint8_t* data, size_t len, const BlePeerDevice& peer, void* context);
 void onDisconnect(const BlePeerDevice& peer, void* context);
 void setup();
 void loop();
@@ -22,20 +21,13 @@ int bin2hex(const byte *input, char *output, int len, int reverse);
 SerialLogHandler logHandler(LOG_LEVEL_TRACE);    //this means Log.info, Log.warn, Log.error will be sent over USB serial virtual com port
 
 SYSTEM_MODE(SEMI_AUTOMATIC)     // for debugging. comment out normally. code will execute without attempting to connect to WiFi or cloud
-#define led D7                  // blue LED pin on Boron board
+#define led D7                  // blue LED pin on Argon board
 #define White_LED D6
 #define Button D5                
 int loop_counter = 0;           //misc counter for debugging
 byte data[10];
 String LED_state;
-//end Debugging Setup Code
 
-
-// Bluetooth Setup Code
-
-//UUID codes for the Services and Characteristics of the Xiaomi Flower Care Moisture Sensor 
-//https://github.com/vrachieru/xiaomi-flower-care-api#protocol
-const BleUuid serviceUuidRoot("0000FE95-0000-1000-8000-00805F9B34FB");  
 
 //Variables for discovering and creating service objects
 Vector<BleService>          ble_peer_all_services;
@@ -64,11 +56,6 @@ int char_connections = 0;
 
 void onDataReceived_BT(const uint8_t* data, size_t len, const BlePeerDevice& peer, void* context);
 
-
-void onDataReceived_HistData(const uint8_t* data, size_t len, const BlePeerDevice& peer, void* context) {
-    for (size_t ii = 0; ii < len; ii++) {   
-    }
-}
 
 void onDisconnect(const BlePeerDevice& peer, void* context){
     Log.info("Disconnect");
