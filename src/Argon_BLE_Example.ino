@@ -1,6 +1,6 @@
 /*
  * Project Argon_BLE_Example
- * Description: Something to help teach how BLE works!
+ * Description: Something to help teach how BLE works!.......The code below is menat to work with LightBLue
  * Author: Mark Ingle
  * Date: 12/28/2019
  */
@@ -17,7 +17,6 @@ SYSTEM_MODE(SEMI_AUTOMATIC)     // for debugging. comment out normally. code wil
 int loop_counter = 0;           //misc counter for debugging
 byte data[10];
 String LED_state;
-
 
 //Variables for discovering and creating service objects
 Vector<BleService>          ble_peer_all_services;
@@ -100,6 +99,7 @@ void loop() {
                 {
                     Log.info("Service %d, UUID: %s", i,(const char*)foundServiceUuid.toString());     
                 }
+            // The code below is looking for the service with a UUID of 10AB....if its found the connection is made and characteristics are connected too
             if (svcCount > 0 && foundServiceUuid == "10AB"){
                 peer = BLE.connect(scanResults[ii].address, true);
                 if (peer.connected()){
@@ -111,8 +111,7 @@ void loop() {
                     digitalWrite(led, HIGH);
                 } else {
                     Log.info("Connection Failed");
-                }
-                
+                } 
             }
         }
     } else { //The code in this else section is just to show how you could get a list of all services or characteristics to find a specific one.  It only runs once.
@@ -164,6 +163,7 @@ void loop() {
                 char_connections = 1;
             }
         }
+    // Once we have a connection we can do stuff with the characteristics
     if (peer.connected()) {
         LED_StateChar.getValue(LED_state);
         if (LED_state == "1"){
@@ -171,7 +171,7 @@ void loop() {
         } else {
             digitalWrite(White_LED, LOW);
         }
-        //LED_State.setValue(Switch_state);
+        //LED_State.setValue(LED_state);
         CIOT_RocksChar.getValue(data, 10);
         if (digitalRead(Button) == 0){ 
             Log.info("CIOT ROCKS!!!!");
